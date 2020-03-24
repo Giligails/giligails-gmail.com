@@ -1,10 +1,3 @@
-$( document ).ready(function() {
-	formatter();
-});
-$( window ).resize(function() {
-  formatter();
-});
-
 function formatter(){
 	console.log($(window).width());
    if ($(window).width() < 768) {
@@ -17,15 +10,15 @@ function formatter(){
 }
 
 function computeIncome(){
-	if($('#incomeValue').val()==0){
+	//if($('#incomeValue').val()==0)
 		console.log('Í run');
 	var sum = 0;
 	$('.income').each(function(){
 		sum += parseFloat(this.value);
 	});
 	console.log(sum);
-	$('#incomeValue').val(sum);
-	}
+	if(sum!==0){
+	$('#incomeValue').val(sum)};
 };
 function computeInvestments(){
 	var sum = 0;
@@ -56,13 +49,29 @@ function computeExcemptions(){
 };
 
 $( "input" ).change(function() {
-	this.value = Math.abs(this.value);
-	$("#message").removeClass('show');
+	if($(this).attr("id") =="name"){
+		$('#user').text(this.value);
+	}
+	else {
+		this.value = Math.abs(this.value);
+	}
+	if($(this).attr("id") =="incomeValue"){
+		$('.income').each(function(){
+		this.value = 0;
+	});
+	};
 	computeIncome();
 	computeExcemptions();
 	computeInvestments();
 	computeDeductions();
 	computeTax();
+	var message = 'Out of your specified Total Income of '+$("#incomeValue").val() + ','+$('#taxable').text() + ' is your taxable Income.\n';
+	message +=  'Total excemptions, Deductions from 80C and Other deductions amount to '+$('#excemptionValue').text()+' ,'+
+	$('#investmentsValue').text()+' and '+$('#deductionsValue').text()+' respectively\n.';
+	message += 'You are liable for paying '+$('#taxtobepaid').text()+' plus the taxes(surcharge and Education Cess), amounting to '+$('#payable').text()+'\n';
+	recommandDeductions();
+	$("#message").text(message);
+	
 });
 
 $( ".deduction" ).change(function() {
@@ -83,13 +92,16 @@ function computeTax(){
 	if(tax<=12500) 
 		$('#taxtobepaid').text(0);
 	$('#payable').text(1.04*parseInt($('#taxtobepaid').text()));
-	recommandDeductions();
+	
 	}
 }
 
 function recommandDeductions(){
-	if(parseInt($('#payable').text())>0 && parseInt($('#investmentsValue').text()) <150000)
-		$("#message").addClass('show');
-		$('#investmentsValue').css('background','red');
+	if(parseInt($('#payable').text())>0 && parseInt($('#investmentsValue').text()) <150000){
+		var message = $("#message").text();
+		message += 'You can save more on taxes by investing '+
+		(150000-parseInt($('#investmentsValue').text()))+' more under 80C.'
+		$("#message").text(message);
+	}
 		
 }
