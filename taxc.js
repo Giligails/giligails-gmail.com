@@ -18,12 +18,10 @@ function formatter(){
 
 function computeIncome(){
 	if($('#incomeValue').val()==0){
-		console.log('Í run');
 	var sum = 0;
 	$('.income').each(function(){
 		sum += parseFloat(this.value);
 	});
-	console.log(sum);
 	$('#incomeValue').val(sum);
 	}
 };
@@ -80,16 +78,19 @@ function computeTax(){
 	$('#taxable').text(Math.max(0,taxable));
 	var tax = 0.05*(taxable-250000) +0.15*Math.max(0,taxable-500000)+0.10*Math.max(0,taxable -1000000);
 	$('#taxtobepaid').text(Math.max(0,tax))
-	if(tax<=12500) 
+	if(tax<=12500) {
 		$('#taxtobepaid').text(0);
+	}
 	$('#payable').text(1.04*parseInt($('#taxtobepaid').text()));
 	recommandDeductions();
 	}
 }
 
 function recommandDeductions(){
-	if(parseInt($('#payable').text())>0 && parseInt($('#investmentsValue').text()) <150000)
+	console.log($('#payable').text());
+	console.log($('#investmentsValue').text());
+	if(parseInt($('#payable').text())>0 && parseInt($('#investmentsValue').text()) <150000){
 		$("#message").addClass('show');
 		$('#investmentsValue').css('background','red');
-		
+	}
 }

@@ -37,7 +37,7 @@
 
 									var prevIcon = li.prev().find('.material-icons');
 									var prevIconClass = prevIcon.html()
-									btnPrev.addClass('btn-animated');
+									//btnPrev.addClass('btn-animated');
 									btnPrev.find('.hidden-block').show();
 									btnPrev.find('.material-icons').html(prevIconClass);
 									
