@@ -62,6 +62,7 @@ function computeTax(taxable){
 
 //Summary Generator
 function summarize(){
+	$('#message').empty();
 	$("#message").append('<li>Out of your specified Total Income of '+$("#incomeValue").val() + ','+$('#taxable').text() + ' is your taxable Income</li>');
 	$("#message").append('<li>Total excemptions, Deductions from 80C and Other deductions amount to '+$('#excemptionValue').text()+' ,'+$('#investmentsValue').text()+' and '+$('#deductionsValue').text()+' respectively.</li>');
 	$("#message").append('<li>You are liable for paying '+$('#taxtobepaid').text()+' plus the taxes(surcharge and Education Cess), amounting to '+$('#payable').text()+'</li>');
@@ -94,7 +95,7 @@ $( "input" ).change(function() {
 function recommandDeductions(){
 	var investment= $('#investmentsValue').text();
 	if(parseInt($('#payable').text())>0 && investment <150000){
-		$("#message").append('<li class = "recommandation">You can save '+computeTax($('#taxable').text()-(150000-investment))+' on taxes by investing '+
+		$("#message").append('<li class = "recommandation">You can save '+(parseInt($('#taxtobepaid').text())-computeTax($('#taxable').text()-(150000-investment)))+' on taxes by investing '+
 		(150000-investment)+' more under 80C.</li>');
 	}
 		
